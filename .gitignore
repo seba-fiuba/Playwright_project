@@ -1,0 +1,18 @@
+# Entornos virtuales
+venv/
+env/
+.venv/
+
+# Caché de Python y Pytest
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Resultados y reportes de Playwright
+test-results/
+playwright-report/
+blob-report/
+
+# Archivos de estado y variables de entorno
+auth_state.json  # ¡Súper importante no subir sesiones!
+.env
