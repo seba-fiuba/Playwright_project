@@ -54,7 +54,7 @@ El proyecto sigue una arquitectura orientada a mantenibilidad:
 - Python 3.10 o superior
 - pip
 
-## Configuracion de Variables de Entorno (Spotify API)
+## Configuración de Variables de Entorno (Spotify API)
 
 El proyecto incluye una plantilla `.env.example` para evitar compartir secretos reales.
 
@@ -73,7 +73,7 @@ SPOTIFY_CLIENT_SECRET=tu_client_secret
 
 Notas:
 
-- El archivo `.env` ya esta ignorado por git.
+- El archivo `.env` ya está ignorado por git.
 - Las credenciales se usan en `conftest.py` mediante `load_dotenv()` y `os.getenv(...)`.
 
 ## Instalacion

@@ -39,13 +39,16 @@ SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
 SPOTIFY_CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def spotify_api(playwright: Playwright) -> APIRequestContext:
-    auth_context = playwright.request.new_context(
+    if not SPOTIFY_CLIENT_ID or not SPOTIFY_CLIENT_SECRET:
+        pytest.skip("Faltan credenciales de Spotify. Se saltea el test.")
+
+    spotify_auth_context = playwright.request.new_context(
         base_url="https://accounts.spotify.com"
     )
 
-    auth_response = auth_context.post(
+    auth_response = spotify_auth_context.post(
         "/api/token",
         headers={"Content-Type": "application/x-www-form-urlencoded"},
         form={
@@ -58,7 +61,7 @@ def spotify_api(playwright: Playwright) -> APIRequestContext:
     assert auth_response.ok, f"Error al pedir token: {auth_response.text()}"
 
     token = auth_response.json()["access_token"]
-    auth_context.dispose()
+    spotify_auth_context.dispose()
 
     api_context = playwright.request.new_context(
         base_url="https://api.spotify.com",

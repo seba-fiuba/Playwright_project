@@ -1,6 +1,8 @@
+import pytest
 from playwright.sync_api import APIRequestContext, expect
 
 
+@pytest.mark.api
 def test_buscar_artista_spotify(spotify_api: APIRequestContext):
     response = spotify_api.get("/v1/search?q=bizarrap&type=artist")
 
