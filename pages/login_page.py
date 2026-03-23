@@ -1,6 +1,6 @@
 from playwright.sync_api import Page
 from pages.components.login_form import LoginForm
-from conftest import BASE_URL
+from utils.config import BASE_URL
 
 
 class LoginPage:

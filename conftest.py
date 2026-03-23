@@ -1,10 +1,7 @@
 import pytest
 from playwright.sync_api import sync_playwright
 from pages.components.login_form import LoginForm
-
-
-BASE_URL = "https://www.saucedemo.com/"
-INVENTORY_PATH = "inventory.html"
+from utils.config import BASE_URL
 
 
 @pytest.fixture(scope="session")

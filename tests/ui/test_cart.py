@@ -1,7 +1,7 @@
 from pages.inventory_page import InventoryPage
 from pages.cart_page import CartPage
 from playwright.sync_api import Page
-from conftest import BASE_URL, INVENTORY_PATH
+from utils.config import BASE_URL, INVENTORY_PATH
 
 
 def test_cart(logged_in_page: Page):

@@ -2,7 +2,7 @@ import pytest
 from playwright.sync_api import Page, expect
 from pages.login_page import LoginPage
 from data.login_credentials import invalid_credentials
-from conftest import BASE_URL, INVENTORY_PATH
+from utils.config import BASE_URL, INVENTORY_PATH
 
 
 ## Happy path test

@@ -16,3 +16,6 @@ blob-report/
 # Archivos de estado y variables de entorno
 auth_state.json  # ¡Súper importante no subir sesiones!
 .env
+
+# Cookies de inicio de sesion
+data/auth_state.json
