@@ -19,3 +19,6 @@ auth_state.json  # ¡Súper importante no subir sesiones!
 
 # Cookies de inicio de sesion
 data/auth_state.json
+
+#variables de entorno
+.env

@@ -1,6 +1,6 @@
 from pages.inventory_page import InventoryPage
 from pages.cart_page import CartPage
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 from utils.config import BASE_URL, INVENTORY_PATH
 
 
