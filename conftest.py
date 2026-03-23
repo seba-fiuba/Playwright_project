@@ -3,6 +3,10 @@ from playwright.sync_api import sync_playwright
 from pages.components.login_form import LoginForm
 
 
+BASE_URL = "https://www.saucedemo.com/"
+INVENTORY_PATH = "inventory.html"
+
+
 @pytest.fixture(scope="session")
 def auth_context(browser):
 
@@ -10,7 +14,7 @@ def auth_context(browser):
     page = context.new_page()
 
     form = LoginForm(page)
-    page.goto("https://www.saucedemo.com/")
+    page.goto(BASE_URL)
     form.fill_username("standard_user")
     form.fill_password("secret_sauce")
     form.click_submit()
