@@ -4,6 +4,8 @@ from pages.login_page import LoginPage
 from data.login_credentials import invalid_credentials
 from utils.config import BASE_URL, INVENTORY_PATH
 
+pytestmark = pytest.mark.ui
+
 
 ## Happy path test
 def test_valid_login(page: Page):

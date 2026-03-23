@@ -12,6 +12,7 @@ Validar flujos criticos del e-commerce de forma mantenible y escalable, aplicand
 - Playwright
 - Pytest
 - pytest-playwright
+- python-dotenv
 
 ## Arquitectura
 
@@ -53,6 +54,28 @@ El proyecto sigue una arquitectura orientada a mantenibilidad:
 - Python 3.10 o superior
 - pip
 
+## Configuración de Variables de Entorno (Spotify API)
+
+El proyecto incluye una plantilla `.env.example` para evitar compartir secretos reales.
+
+1. Copiar la plantilla:
+
+```bash
+cp .env.example .env
+```
+
+2. Completar las credenciales en `.env`:
+
+```env
+SPOTIFY_CLIENT_ID=tu_client_id
+SPOTIFY_CLIENT_SECRET=tu_client_secret
+```
+
+Notas:
+
+- El archivo `.env` ya está ignorado por git.
+- Las credenciales se usan en `conftest.py` mediante `load_dotenv()` y `os.getenv(...)`.
+
 ## Instalacion
 
 1. Clonar repositorio:
@@ -93,6 +116,12 @@ Ejecutar solo UI:
 
 ```bash
 pytest tests/ui
+```
+
+Ejecutar solo API:
+
+```bash
+pytest tests/api
 ```
 
 Ejecutar un archivo puntual:
