@@ -1,7 +1,7 @@
 import pytest
 import os
 from playwright.sync_api import Playwright, APIRequestContext, expect
-from data.data_api import VALID_ARTIST
+from data.data_api import VALID_ARTIST, SPOTIFY_URIS
 
 
 @pytest.mark.api
@@ -52,4 +52,13 @@ def test_create_playlist(spotify_user_context):
     data = response.json()
     assert data["name"] == "Playlist portfolio"
     assert data["type"] == "playlist", "El objeto creado no es una playlist"
-    print(f"PLAYLIST ID: {data['id']}")
+    playlist_id = data["id"]
+
+    song_body = {"uris": SPOTIFY_URIS, "position": 0}
+
+    response_playlist = spotify_user_context.post(
+        f"https://api.spotify.com/v1/playlists/{playlist_id}/items", data=song_body
+    )
+    data_playlist = response_playlist.json()
+    assert response_playlist.status == 201, "La canción no se agrego a la playlist"
+    assert "snapshot_id" in data_playlist, "No se escribio el snapshor id"
