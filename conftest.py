@@ -73,3 +73,21 @@ def spotify_api(playwright: Playwright) -> APIRequestContext:
     yield api_context
 
     api_context.dispose()
+
+
+@pytest.fixture(scope="session")
+def spotify_user_context(playwright: Playwright):
+    user_token = os.getenv("SPOTIFY_USER_TOKEN")
+    assert user_token is not None, "Falta configurar SPOTIFY_USER_TOKEN"
+
+    context = playwright.request.new_context(
+        base_url="https://api.spotify.com",
+        extra_http_headers={
+            "Authorization": f"Bearer {user_token}",
+            "Content-Type": "application/json",
+        },
+    )
+
+    yield context
+
+    context.dispose()

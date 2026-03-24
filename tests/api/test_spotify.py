@@ -38,26 +38,14 @@ def test_unauthorized_request(playwright: Playwright):
 
 
 @pytest.mark.api
-def test_create_playlist(playwright: Playwright):
-    user_token = os.getenv("SPOTIFY_USER_TOKEN")
-
-    assert user_token is not None, "Falta configurar SPOTIFY_USER_TOKEN en el archivo"
-
-    api_context = playwright.request.new_context(
-        base_url="https://api.spotify.com",
-        extra_http_headers={"Authorization": f"Bearer {user_token}"},
-    )
-
+def test_create_playlist(spotify_user_context):
     playlist_body = {
         "name": "Playlist portfolio",
         "description": "Creada 100%",
         "public": False,
     }
 
-    response = api_context.post("/v1/me/playlists", data=playlist_body)
-    print(f"\nStatus Code devuelto: {response.status}")
-    if response.status != 201:
-        print(f"Detalle del error: {response.text()}")
+    response = spotify_user_context.post("/v1/me/playlists", data=playlist_body)
 
     assert response.status == 201, "El status code no fue 201 created"
 
@@ -65,5 +53,3 @@ def test_create_playlist(playwright: Playwright):
     assert data["name"] == "Playlist portfolio"
     assert data["type"] == "playlist", "El objeto creado no es una playlist"
     print(f"PLAYLIST ID: {data['id']}")
-
-    api_context.dispose()
