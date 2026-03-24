@@ -13,6 +13,7 @@ Desarrollar una suite de pruebas mantenible y escalable que aplique buenas prác
 - Pytest
 - pytest-playwright
 - python-dotenv
+- allure-pytest
 
 ## Arquitectura
 
@@ -169,6 +170,28 @@ Modo verbose:
 pytest -v
 ```
 
+## Reportes con Allure
+
+Generar resultados Allure durante la ejecucion:
+
+```bash
+pytest --alluredir=allure_results
+```
+
+Levantar reporte en modo local:
+
+```bash
+allure serve allure_results
+```
+
+Generar reporte estatico (artefacto):
+
+```bash
+allure generate allure_results -o allure-report --clean
+```
+
+Nota: para usar los comandos `allure serve` y `allure generate`, necesitas tener instalado **Allure Commandline** en tu sistema.
+
 ## Fixtures Relevantes
 
 - `auth_context` (scope session): autentica una vez y guarda estado en `data/auth_state.json` (UI).
@@ -184,7 +207,7 @@ pytest -v
 
 ## Roadmap
 
-- [ ] **Request Chaining:** Encadenar peticiones API (ej: Crear Playlist -> Capturar ID -> Agregar canciones).
+- [x] **Request Chaining:** Encadenar peticiones API (ej: Crear Playlist -> Capturar ID -> Agregar canciones).
 - [ ] **Testing Híbrido (E2E):** Generar data de prueba transaccional vía API de forma ultra rápida y validar su correcta visualización en la UI.
-- [ ] Integrar reportes avanzados (por ejemplo, HTML/Allure).
+- [x] Integrar reportes avanzados con Allure.
 - [ ] Agregar pipeline CI/CD (GitHub Actions) con ejecución automática por pull request.

@@ -22,3 +22,5 @@ data/auth_state.json
 
 #variables de entorno
 .env
+
+allure_results/
