@@ -1,5 +1,5 @@
 import pytest
-import os
+import allure
 from playwright.sync_api import Playwright, APIRequestContext, expect
 from data.data_api import VALID_ARTIST, SPOTIFY_URIS
 
@@ -59,6 +59,8 @@ def test_unauthorized_request(playwright: Playwright):
     api_context.dispose()
 
 
+@allure.epic("Spotify API")
+@allure.feature("Playlist Management")
 @pytest.mark.api
 def test_create_playlist(spotify_user_context):
     """

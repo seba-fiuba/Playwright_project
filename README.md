@@ -175,7 +175,7 @@ pytest -v
 Generar resultados Allure durante la ejecucion:
 
 ```bash
-pytest --alluredir=allure_results
+pytest --alluredir=allure_results --clean-alluredir
 ```
 
 Levantar reporte en modo local:
@@ -188,6 +188,12 @@ Generar reporte estatico (artefacto):
 
 ```bash
 allure generate allure_results -o allure-report --clean
+```
+
+Atajo (generar resultados y abrir reporte en un solo comando):
+
+```bash
+pytest --alluredir=allure_results --clean-alluredir && allure serve allure_results
 ```
 
 Nota: para usar los comandos `allure serve` y `allure generate`, necesitas tener instalado **Allure Commandline** en tu sistema.
