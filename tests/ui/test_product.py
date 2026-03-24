@@ -8,6 +8,7 @@ pytestmark = pytest.mark.ui
 
 
 def test_add_and_remove_to_cart(logged_in_page: Page):
+    """Verifica que se pueda agregar y remover un producto del carrito"""
     inventory_page = InventoryPage(logged_in_page)
     logged_in_page.goto(f"{BASE_URL}{INVENTORY_PATH}")
     inventory_page.action_button("Sauce Labs Backpack", "Add to  cart")
@@ -18,6 +19,7 @@ def test_add_and_remove_to_cart(logged_in_page: Page):
 
 
 def test_detail_product(logged_in_page: Page):
+    """Verfica que se pueda acceder al detalle del producto y desde aqui poder agregar y remover el producto del carrito"""
     inventory_page = InventoryPage(logged_in_page)
     detail_product = ProductDetailPage(logged_in_page)
     logged_in_page.goto(f"{BASE_URL}{INVENTORY_PATH}")

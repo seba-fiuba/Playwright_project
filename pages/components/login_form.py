@@ -2,6 +2,8 @@ from playwright.sync_api import Page, Locator
 
 
 class LoginForm:
+    """Componentes del Login y las interacciones con los mismos"""
+
     def __init__(self, page: Page):
         self.page = page
         self.username_input: Locator = page.locator('[data-test="username"]')

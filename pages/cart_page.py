@@ -3,6 +3,12 @@ from pages.components.cart_manager import CartManager
 
 
 class CartPage:
+    """
+    Representa la vista del carrito de compras.
+    Actúa como orquestador del flujo de checkout, delegando las
+    interacciones directas con la UI al CartManager.
+    """
+
     def __init__(self, page: Page):
         self.page = page
         self.cart = CartManager(page)

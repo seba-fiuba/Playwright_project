@@ -7,6 +7,19 @@ from data.data_api import VALID_ARTIST, SPOTIFY_URIS
 @pytest.mark.api
 @pytest.mark.parametrize("artist_name", VALID_ARTIST)
 def test_search_valid_spotify_artist(spotify_api: APIRequestContext, artist_name):
+    """
+    Objetivo: Validar que el endpoint de búsqueda retorna el artista correcto.
+
+    Pre:
+        - Client Credentials Token válido inyectado en el contexto.
+    Pasos:
+        1. Realizar petición GET a /search con el nombre del artista.
+    Pos:
+        - Status Code 200 (OK).
+        - La respuesta contiene un objeto 'artists' con al menos un resultado.
+        - El nombre del primer resultado coincide con el parámetro de búsqueda.
+    """
+
     response = spotify_api.get(f"/v1/search?q={artist_name}&type=artist")
 
     expect(response).to_be_ok()
@@ -18,11 +31,20 @@ def test_search_valid_spotify_artist(spotify_api: APIRequestContext, artist_name
     assert first_result["name"] == artist_name
     assert first_result["type"] == "artist"
 
-    print(f"\nPerfil de Bizarrap: {first_result['external_urls']['spotify']}")
-
 
 @pytest.mark.api
 def test_unauthorized_request(playwright: Playwright):
+    """
+    Objetivo: Validar que, al no usar los tokens requeridos, la API devuelva un error 401.
+
+    Pre:
+        - Contexto de API sin encabezado de Autorización.
+    Pasos:
+        1. Realizar petición GET al endpoint de búsqueda.
+    Pos:
+        - Status code 401 por acceso no autorizado.
+        - La respuesta devuelve el status y el mensaje de error correspondiente.
+    """
     api_context = playwright.request.new_context(base_url="https://api.spotify.com")
 
     response = api_context.get("/v1/search?q=rock&type=artist")
@@ -39,6 +61,18 @@ def test_unauthorized_request(playwright: Playwright):
 
 @pytest.mark.api
 def test_create_playlist(spotify_user_context):
+    """
+    Objetivo: Validar que el endpoint que permite crear una playlist y el endpoint que permite agregar canciones a una playlist.
+
+    Pre:
+        - User Credentials Token válido inyectado en el contexto.
+    Pasos:
+        1. Realizar petición POST
+    Pos:
+        - Status Code 201 (OK) en ambos endpoints.
+        - La respuesta de crear la playlist contiene un objeto 'playlist' con la información de la playlist creada.
+        - La respuesta de agregar canciones la plylist contiene el snapshot_id que confirma que se agregaron las canciones.
+    """
     playlist_body = {
         "name": "Playlist portfolio",
         "description": "Creada 100%",
