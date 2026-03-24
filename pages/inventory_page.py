@@ -3,6 +3,12 @@ from pages.components.header import Header
 
 
 class InventoryPage:
+    """
+    Representa la pantalla principal del catálogo de productos.
+    Sirve como punto de entrada para acceder al Header, al menú lateral
+    y a la grilla de artículos disponibles.
+    """
+
     def __init__(self, page: Page):
         self.page = page
         self.header = Header(page)

@@ -4,6 +4,12 @@ from utils.config import BASE_URL
 
 
 class LoginPage:
+    """
+    Representa la vista del login de usuario.
+    Actúa como orquestador para realizar el login de usuario,
+    delegando las interacciones con la UI al LoginForm
+    """
+
     def __init__(self, page: Page):
         self.page = page
         self.form = LoginForm(page)

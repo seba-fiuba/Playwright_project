@@ -7,8 +7,8 @@ from utils.config import BASE_URL, INVENTORY_PATH
 pytestmark = pytest.mark.ui
 
 
-## Happy path test
 def test_valid_login(page: Page):
+    """Verifica el Happy path de autenticación con credenciales válidas"""
     login_page = LoginPage(page)
 
     login_page.navigate()
@@ -16,11 +16,9 @@ def test_valid_login(page: Page):
     expect(page).to_have_url(f"{BASE_URL}{INVENTORY_PATH}")
 
 
-##Unhappy path test
-
-
 @pytest.mark.parametrize("username, password, error_msg", invalid_credentials)
 def test_invalid_login(page, username, password, error_msg):
+    """Verifica el rechazo de login y el mensaje de error para credenciales inválidas"""
     login_page = LoginPage(page)
     login_page.navigate()
     login_page.login(username, password)

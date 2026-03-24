@@ -2,6 +2,8 @@ from playwright.sync_api import Page, Locator, expect
 
 
 class CartManager:
+    """Componentes del carrito de compras y las distintas interacciones con estos"""
+
     def __init__(self, page: Page):
         self.page = page
         self.checkout_button: Locator = page.locator('[data-test="checkout"]')
