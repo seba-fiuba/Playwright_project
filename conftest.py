@@ -7,7 +7,7 @@ from utils.config import BASE_URL
 
 
 @pytest.fixture(scope="session")
-def auth_context(browser):
+def auth_context(browser, pytestconfig):
 
     context = browser.new_context()
     page = context.new_page()
@@ -18,9 +18,11 @@ def auth_context(browser):
     form.fill_password("secret_sauce")
     form.click_submit()
 
-    context.storage_state(path="data/auth_state.json")
+    auth_file = pytestconfig.rootpath / "data" / "auth_state.json"
+    auth_file.parent.mkdir(parents=True, exist_ok=True)
+    context.storage_state(path=auth_file)
 
-    return "data/auth_state.json"
+    return auth_file
 
 
 @pytest.fixture(scope="function")
