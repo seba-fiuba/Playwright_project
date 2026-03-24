@@ -82,19 +82,25 @@ Notas:
 
 ### 🔑 Obtención del Token de Usuario (Para tests de escritura - POST)
 
-Los endpoints de lectura (GET) utilizan el flujo *Client Credentials* automático. Sin embargo, para ejecutar los tests de escritura (como la creación de playlists), Spotify requiere un **Authorization Code Flow** con permisos de usuario.
+Para ejecutar los tests de creación o modificación (POST/PUT), Spotify requiere un **Authorization Code Flow** con permisos específicos. Para generar este token localmente, utilizamos Postman simulando el flujo completo de autenticación:
 
-Para que los tests de `POST` funcionen localmente, debes generar un token temporal:
+**Paso 1: Configurar la App en Spotify**
+1. En el [Spotify Developer Dashboard](https://developer.spotify.com/dashboard), ve a la configuración (Settings) de tu App.
+2. Agrega la siguiente URL en **Redirect URIs**: `https://oauth.pstmn.io/v1/callback` y guarda los cambios.
 
-1. Ingresa a la [Consola Web de Spotify Web API](https://developer.spotify.com/documentation/web-api/reference/create-playlist).
-2. Haz clic en el botón verde **"Try it"** (lado derecho).
-3. Inicia sesión y autoriza los scopes requeridos: 
-   - `playlist-modify-public`
-   - `playlist-modify-private`
-4. Desde la pestaña *Network* de tu navegador (o copiando el cURL generado), extrae el token alfanumérico largo que aparece en el header `Authorization: Bearer`.
-5. Pega ese valor en tu archivo `.env` bajo la variable `SPOTIFY_USER_TOKEN`.
+**Paso 2: Generar el Token con Postman**
+1. Abre Postman, crea una nueva Request y ve a la pestaña **Authorization**.
+2. Selecciona el tipo **OAuth 2.0** y configura los siguientes parámetros en "Configure New Token":
+   - **Grant Type:** Authorization Code
+   - **Callback URL:** `https://oauth.pstmn.io/v1/callback`
+   - **Auth URL:** `https://accounts.spotify.com/authorize`
+   - **Access Token URL:** `https://accounts.spotify.com/api/token`
+   - **Client ID / Client Secret:** (Tus credenciales de la app)
+   - **Scope:** `playlist-modify-public playlist-modify-private`
+3. Haz clic en **"Get New Access Token"**, inicia sesión en la ventana emergente y acepta los permisos.
+4. Postman capturará el token de usuario (Bearer). Cópialo y pégalo en tu archivo `.env` bajo la variable `SPOTIFY_USER_TOKEN`.
 
-*Nota: Este token tiene una validez de 1 hora por políticas de seguridad de Spotify.*
+*Nota: Este token tiene una validez temporal. Si el test devuelve un error 401, simplemente regenera el token en Postman.*
 
 ## Instalacion
 
