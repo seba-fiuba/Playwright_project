@@ -1,10 +1,10 @@
-# E-Commerce QA Automation Framework
+# QA Automation Framework: UI (SauceDemo) & API (Spotify)
 
-Framework de automatizacion de pruebas E2E para la plataforma de demo [SauceDemo](https://www.saucedemo.com/), construido con Python, Playwright y Pytest.
+Framework de automatización de pruebas integrales construido con Python, Playwright y Pytest. Este proyecto sirve como portfolio técnico, demostrando la capacidad de validar flujos críticos de E-commerce (UI) y gestionar integraciones complejas de servicios web (API REST) con manejo avanzado de autenticación OAuth 2.0.
 
 ## Objetivo
 
-Validar flujos criticos del e-commerce de forma mantenible y escalable, aplicando buenas practicas de automatizacion.
+Desarrollar una suite de pruebas mantenible y escalable que aplique buenas prácticas de QA Automation, cubriendo tanto la interfaz gráfica (Page Object Model) como la capa de servicios (Endpoints, Status Codes, y flujos de autorización).
 
 ## Stack Tecnologico
 
@@ -16,11 +16,16 @@ Validar flujos criticos del e-commerce de forma mantenible y escalable, aplicand
 
 ## Arquitectura
 
-El proyecto sigue una arquitectura orientada a mantenibilidad:
+El proyecto sigue una arquitectura orientada a mantenibilidad, dividida en dos capas:
 
-- Page Object Model (POM): separa selectores y acciones de UI de la logica de los tests.
-- Componentes reutilizables: encapsula secciones comunes de interfaz en `pages/components`.
-- Fixtures en Pytest: centraliza setup de autenticacion y reutilizacion de contexto.
+**UI Testing (E-Commerce)**
+- **Page Object Model (POM):** separa selectores y acciones de UI de la lógica de los tests.
+- **Componentes reutilizables:** encapsula secciones comunes de interfaz en `pages/components`.
+
+**API Testing (Spotify)**
+- **Validación de Contratos:** Pruebas de integración validando métodos HTTP (GET, POST) y Status Codes (200, 201).
+- **Gestión de Autenticación Avanzada:** Manejo de flujos OAuth 2.0 separando tokens de aplicación (Client Credentials) y tokens de usuario (Authorization Code) inyectados de forma segura mediante `.env`.
+- **Fixtures en Pytest:** centraliza el setup de autenticación y reutilización de contextos (`APIRequestContext`) para ambas capas.
 
 ## Estructura del Proyecto
 
@@ -54,7 +59,9 @@ El proyecto sigue una arquitectura orientada a mantenibilidad:
 ## Requisitos
 
 - Python 3.10 o superior
-- pip
+- pip (Gestor de paquetes de Python)
+- Git
+- Cuenta en [Spotify para Desarrolladores](https://developer.spotify.com/) (Para obtener las credenciales de la API)
 
 ## Configuración de Variables de Entorno (Spotify API)
 
@@ -164,17 +171,20 @@ pytest -v
 
 ## Fixtures Relevantes
 
-- `auth_context` (scope session): autentica una vez y guarda estado en `data/auth_state.json`.
-- `logged_in_page` (scope function): crea una pagina autenticada para cada test.
+- `auth_context` (scope session): autentica una vez y guarda estado en `data/auth_state.json` (UI).
+- `logged_in_page` (scope function): crea una página autenticada para cada test (UI).
+- **Contexto API:** Creación de contextos de petición HTTP aislados inyectando headers de autorización (Tokens Bearer) dinámicamente.
 
-## Buenas Practicas Implementadas
+## Buenas Prácticas Implementadas
 
-- Separacion clara entre capa de pagina, componentes y casos de prueba.
-- Reutilizacion de estado autenticado para mejorar performance.
-- Estructura preparada para escalar con pruebas API y nuevos modulos.
+- Separación clara entre capa de página (POM), componentes y casos de prueba.
+- Reutilización de estado autenticado para mejorar performance en pruebas UI.
+- **Testing Integrado:** Inclusión de capa API funcional con validación de Status Codes, payload y manejo avanzado de OAuth 2.0.
+- **Seguridad:** Ocultamiento estricto de credenciales y tokens de usuario mediante variables de entorno (`.env`).
 
 ## Roadmap
 
-- Expandir pruebas API en `tests/api`.
-- Integrar reportes avanzados (por ejemplo, HTML/Allure).
-- Agregar pipeline CI con ejecucion automatica por pull request.
+- [ ] **Request Chaining:** Encadenar peticiones API (ej: Crear Playlist -> Capturar ID -> Agregar canciones).
+- [ ] **Testing Híbrido (E2E):** Generar data de prueba transaccional vía API de forma ultra rápida y validar su correcta visualización en la UI.
+- [ ] Integrar reportes avanzados (por ejemplo, HTML/Allure).
+- [ ] Agregar pipeline CI/CD (GitHub Actions) con ejecución automática por pull request.
